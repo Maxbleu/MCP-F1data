@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mcp_f1data"
 dynamic = ["version"]
-description = "MCP Motorsport data for some racing APIs such as F1, WEC, INDY or NASCAR"
+description = "MCP server for F1 data using Fastf1, OpenF1 or Ergast APIs"
 readme = "README.md"
 requires-python = ">=3.12"
 classifiers = [
@@ -36,3 +36,8 @@ mcp-f1data = "mcp_f1data.server.mcp_server:main"
 
 [tool.setuptools]
 packages = ["mcp_f1data", "mcp_f1data.server", "mcp_f1data.tools", "mcp_f1data.utils"]
+
+[tool.setuptools_scm]
+local_scheme = "no-local-version"
+fallback_version = "0.0.dev0"
+tag_regex = "^[vV]?(?P<version>.+)$"
