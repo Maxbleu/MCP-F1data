@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mcp_motorsportdata"
+name = "mcp_f1data"
 dynamic = ["version"]
 description = "MCP Motorsport data for some racing APIs such as F1, WEC, INDY or NASCAR"
 readme = "README.md"
@@ -27,9 +27,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/maxbleu/mcp_motorsportdata"
-Repository = "https://github.com/maxbleu/mcp_motorsportdata"
-Issues = "https://github.com/maxbleu/mcp_motorsportdata/issues"
+Homepage = "https://github.com/maxbleu/mcp_f1data"
+Repository = "https://github.com/maxbleu/mcp_f1data"
+Issues = "https://github.com/maxbleu/mcp_f1data/issues"
 
 [project.scripts]
 mcp-f1data = "mcp_f1data.server.mcp_server:main"
