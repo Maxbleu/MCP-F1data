@@ -1,4 +1,4 @@
-from mcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 from ..tools.fastf1_tools import register_fastf1_tools
 
 def create_mcp_server() -> FastMCP:
