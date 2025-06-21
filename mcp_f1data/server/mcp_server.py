@@ -4,8 +4,7 @@ from ..tools.fastf1_tools import register_fastf1_tools
 def create_mcp_server() -> FastMCP:
     """Create and configure the MCP server"""
     mcp = FastMCP(
-        "mcp-f1analisys",
-        timeout=30.0
+        "mcp-f1analisys"
     )
 
     register_fastf1_tools(mcp)
