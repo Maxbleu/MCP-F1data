@@ -50,7 +50,7 @@ def register_fastf1_tools(mcp):
         """Get the top speed for a driver in a session. In case no driver is specified, it will return the highest top speed for all drivers"""
 
         laps = get_laps(type_session, year, round, session, driver)
-        max_speed = max(laps["SpeedI1"], laps["SpeedI2"], laps["SpeedFL"], laps["SpeedST"])
+        max_speed = laps[["SpeedI1", "SpeedI2", "SpeedFL", "SpeedST"]].values.max()
         return max_speed
 
     @mcp.tool(name="get_total_laps")
@@ -120,3 +120,14 @@ def register_fastf1_tools(mcp):
         deleted_laps = laps[laps["Deleted"] == True][["Time","Driver","LapNumber","Deleted","DeletedReason"]]
         return deleted_laps.to_json()
 
+    @mcp.tool(name="get_driver_session_penalties")
+    async def get_driver_session_penalties(
+        type_session: str = Field(description="Type of session in general terms: official or pretest (pre-session test)"),
+        year: int = Field(description="The year of the season when the session was held"),
+        round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix."),
+        session: str = Field(description="The exact name of the session within the event 'R'"),
+        driver: str = Field(description="The driver's name.")
+    ) -> json:
+        """Get driver session penalties."""
+
+        
