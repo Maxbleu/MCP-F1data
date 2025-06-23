@@ -12,7 +12,7 @@ def register_fastf1_tools(mcp):
         year: int = Field(description="The year of the season when the session was held"),
         round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix."),
         session: str = Field(description="The exact name of the session within the event, such as 'FP1', 'FP2', 'Q', 'R', or 'Sprint'."),
-        driver: str = Field(description="The driver's name. If you don't have a specific driver in mind, you can leave this blank to get the fastest lap for all drivers"),
+        driver: str = Field(description="The abbrevattion driver's name. If you don't have a specific driver in mind, you can leave this blank to get the fastest lap for all drivers"),
     ) -> json:
         """Get the fastest laps for a driver in a session. In case no driver is specified, it will return the fastest laps for all drivers"""
 
@@ -30,7 +30,7 @@ def register_fastf1_tools(mcp):
         year: int = Field(description="The year of the season when the session was held"),
         round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix."),
         session: str = Field(description="The exact name of the session within the event, such as 'FP1', 'FP2', 'Q', 'R', or 'Sprint'."),
-        driver: str = Field(description="The driver's names."),
+        driver: str = Field(description="The abbrevattion driver's names."),
         lap_number: int = Field(description="The lap number"),
     ) -> json:
         """Get specific lap from a driver in a session"""
@@ -45,12 +45,12 @@ def register_fastf1_tools(mcp):
         year: int = Field(description="The year of the season when the session was held"),
         round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix."),
         session: str = Field(description="The exact name of the session within the event, such as 'FP1', 'FP2', 'Q', 'R', or 'Sprint'."),
-        driver: str = Field(description="The driver's name. If you don't have a specific driver in mind, you can leave this blank to get the fastest lap for all drivers"),
+        driver: str = Field(description="The abbrevattion driver's name. If you don't have a specific driver in mind, you can leave this blank to get the fastest lap for all drivers"),
     ) -> int:
         """Get the top speed for a driver in a session. In case no driver is specified, it will return the highest top speed for all drivers"""
 
         laps = get_laps(type_session, year, round, session, driver)
-        max_speed = laps[["SpeedI1", "SpeedI2", "SpeedFL", "SpeedST"]].values.max()
+        max_speed = laps["SpeedST"].max()
         return max_speed
 
     @mcp.tool(name="get_total_laps")
@@ -59,7 +59,7 @@ def register_fastf1_tools(mcp):
         year: int = Field(description="The year of the season when the session was held"),
         round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix."),
         session: str = Field(description="The exact name of the session within the event, such as 'FP1', 'FP2', 'Q', 'R', or 'Sprint'."),
-        driver: str = Field(description="The driver's name. If you don't have a specific driver in mind, you can leave this blank to get the fastest lap for all drivers"),
+        driver: str = Field(description="The abbrevattion driver's name. If you don't have a specific driver in mind, you can leave this blank to get the fastest lap for all drivers"),
     ) -> int:
         """Get the total laps for a driver in a session. In case no driver is specified, it will return the total laps for all drivers"""
 
@@ -68,28 +68,20 @@ def register_fastf1_tools(mcp):
 
     @mcp.tool(name="get_driver_team")
     async def get_driver_team(
-        type_session: str = Field(description="Type of session in general terms: official or pretest (pre-session test)"),
-        year: int = Field(description="The year of the season when the session was held"),
-        round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix."),
-        session: str = Field(description="The exact name of the session within the event, such as 'FP1', 'FP2', 'Q', 'R', or 'Sprint'."),
-        driver: str = Field(description="The driver's name."),
+        driver: str = Field(description="The abbrevattion driver's name."),
     ) -> str:
         """Get the driver’s team name."""
 
-        session = get_session(type_session, year, round, session)
+        session = get_session(latest_sesion=True)
         return f1_plotting.get_team_name_by_driver(identifier=driver, session=session)
 
     @mcp.tool(name="get_team_driver")
     async def get_team_driver(
-        type_session: str = Field(description="Type of session in general terms: official or pretest (pre-session test)"),
-        year: int = Field(description="The year of the season when the session was held"),
-        round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix."),
-        session: str = Field(description="The exact name of the session within the event, such as 'FP1', 'FP2', 'Q', 'R', or 'Sprint'."),
-        team: str = Field(description="The team's name."),
+        team: str = Field(description="The team's name.")
     ) -> str:
         """Get the team's driver name."""
 
-        session = get_session(type_session, year, round, session)
+        session = get_session(latest_sesion=True)
         return f1_plotting.get_driver_names_by_team(identifier=team, session=session)
 
     @mcp.tool(name="get_box_laps")
@@ -98,7 +90,7 @@ def register_fastf1_tools(mcp):
         year: int = Field(description="The year of the season when the session was held"),
         round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix."),
         session: str = Field(description="The exact name of the session within the event 'R'"),
-        driver: str = Field(description="The driver's name."),
+        driver: str = Field(description="The abbrevattion driver's name."),
     ) -> json:
         """Get laps where the driver was in the pit box."""
 
@@ -112,7 +104,7 @@ def register_fastf1_tools(mcp):
         year: int = Field(description="The year of the season when the session was held"),
         round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix."),
         session: str = Field(description="The exact name of the session within the event 'R'"),
-        driver: str = Field(description="The driver's name."),
+        driver: str = Field(description="The abbrevattion driver's name."),
     ) -> json:
         """Get laps where the driver was in the pit box."""
 
@@ -126,7 +118,7 @@ def register_fastf1_tools(mcp):
         year: int = Field(description="The year of the season when the session was held"),
         round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix."),
         session: str = Field(description="The exact name of the session within the event 'R'"),
-        driver: str = Field(description="The driver's name.")
+        driver: str = Field(description="The abbrevattion driver's name.")
     ) -> json:
         """Get driver session penalties."""
 
