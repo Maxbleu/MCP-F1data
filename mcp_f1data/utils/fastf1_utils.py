@@ -3,6 +3,7 @@ import fastf1.events
 import pandas as pd
 from pandas import DataFrame
 from datetime import datetime
+from fastapi import HTTPException
 
 def get_latest_session():
 
@@ -28,21 +29,18 @@ def get_latest_session():
 def get_session(type_event:str=None, year:int=None, event:int=None, session:str=None, latest_sesion:bool=False):
     if latest_sesion:
         type_event, year, event, session = get_latest_session()
-    try:
-        if type_event == "official":
-            session = fastf1.get_session(year, event, session)
-        elif type_event == "pretest":
-            session = fastf1.get_testing_session(year, event, session)
-        session.load()
-    except:
-        raise ValueError("The session does not exist or is not available now!")
+    if type_event == "official":
+        session = fastf1.get_session(year, event, session)
+    elif type_event == "pretest":
+        session = fastf1.get_testing_session(year, event, session)
+    session.load()
     return session
 
 def get_laps(type_event:str, year:int, event:int, session:str, driver:str=None):
     session = get_session(type_event, year, event, session)
 
-    if session.laps.empty:
-        raise ValueError("There are no laps in this session available!")
+    if len(session.drivers) == 0:
+        raise HTTPException(status_code=404, detail="No laps found for this session.")
 
     laps = session.laps
     laps["LapTime"] = pd.to_timedelta(laps["LapTime"])
