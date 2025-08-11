@@ -1,4 +1,4 @@
-import json
+import json, requests
 from pydantic import Field
 from fastmcp import FastMCP
 import fastf1.plotting as f1_plotting
@@ -6,6 +6,70 @@ from ..utils.fastf1_utils import get_laps, get_specific_lap, get_session
 
 def register_fastf1_tools(mcp:FastMCP):
     """Register all F1 analysis tools with the MCP server"""
+
+    @mcp.tool(name="get_drivers_standing", description="This tool will return the actual drivers standing, only indicating the year")
+    async def get_drivers_standing(
+        year: int = Field(description="The year of the season when the session was held")
+    ) -> json:
+        """Get the drivers standing for a specific year"""
+
+        response = requests.get(f"https://api.jolpi.ca/ergast/f1/{year}/driverstandings/")
+        if response.status_code == 200:
+            json = response.json()
+            return json["MRData"]["StandingsTable"]["StandingsLists"][0]["DriverStandings"]
+
+    @mcp.tool(name="get_specific_driver_standing", description="This tool will return a specific driver standing, only indicating the year and the driver or selecting a standing position")
+    async def get_specific_driver_standing(
+        year: int = Field(description="The year of the season when the session was held"),
+        driver: str = Field(description="The abbreviation of the driver's name. If you don't have a specific driver indicated, you must to put -> (not_indicated)"),
+        standing_position: int = Field(description="The position in the standing. If you don't have a specific stading position indicated, you must to put -> (-1)")
+    ) -> json:
+        """Get a specific standig for a specific year, by driver or by position"""
+
+        url = f"https://api.jolpi.ca/ergast/f1/{year}/drivers/{driver}/driverstandings/" if standing_position == -1 else f"https://api.jolpi.ca/ergast/f1/{year}/driverstandings/{standing_position}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            json = response.json()
+            return json["MRData"]["StandingsTable"]["StandingsLists"][0]["DriverStandings"][0]
+
+    @mcp.tool(name="get_constructors_standing", description="This tool will return the actual constructors standing, only indicating the year")
+    async def get_constructors_standing(
+        year: int = Field(description="The year of the season when the session was held")
+    ) -> json:
+        """Get the constructors standing for a specific year"""
+
+        response = requests.get(f"https://api.jolpi.ca/ergast/f1/{year}/constructorstandings/")
+        if response.status_code == 200:
+            json = response.json()
+            return json["MRData"]["StandingsTable"]["StandingsLists"][0]["ConstructorStandings"]
+
+    @mcp.tool(name="get_specific_constructor_standing", description="This tool will return a specific constructor standing, only indicating the year and the constructor or selecting a standing position")
+    async def get_specific_constructor_standing(
+        year: int = Field(description="The year of the season when the session was held"),
+        constructor: str = Field(description="The abbreviation of the constructor's name. If you don't have a specific constructor indicated, you must to put -> (not_indicated)"),
+        standing_position: int = Field(description="The position in the standing. If you don't have a specific stading position indicated, you must to put -> (-1)")
+    ) -> json:
+        """Get a specific standig for a specific year, by constructor or by position"""
+
+        url = f"https://api.jolpi.ca/ergast/f1/{year}/constructors/{constructor}/constructorstandings/" if standing_position == -1 else f"https://api.jolpi.ca/ergast/f1/{year}/constructorstandings/{standing_position}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            json = response.json()
+            return json["MRData"]["StandingsTable"]["StandingsLists"][0]["ConstructorStandings"][0]
+
+    @mcp.tool(name="get_session_results", description="This tool will return a final classification for a specific session")
+    async def get_session_results(
+        type_session: str = Field(description="Type of session in general terms: official or pretest (pre-session test)"),
+        year: int = Field(description="The year of the season when the session was held"),
+        round: int = Field(description="The round number of the championship, for example 1 for the first Grand Prix. If round is not indicated, you must to put -> (-1)"),
+        session: str = Field(description="The exact name of the session within the event, such as 'FP1', 'FP2', 'Q', 'R', or 'Sprint'. If round is not indicated, you must to put -> (not_indicated)"),
+        latest_session: bool = Field(description="Indicate if you want the latest session of the event. By default is False. But if the user want the latest session, it will be True"),
+    ) -> json:
+        """Get the final classification for a specific session"""
+
+        session = get_session(type_event=type_session, year=year, event=round, session=session, latest_session=latest_session)
+        print(session.results)
+        return session.results.to_json()
 
     @mcp.tool(name="get_fastest_lap")
     async def get_fastest_lap(
@@ -52,24 +116,6 @@ def register_fastf1_tools(mcp:FastMCP):
         laps = get_laps(type_session, year, round, session, driver)
         return len(laps)
 
-    @mcp.tool(name="get_driver_team", description="Get the team of a driver. You will need to provide the driver's name, it's not neccesary to provide the year, round or session.")
-    async def get_driver_team(
-        driver: str = Field(description="The driver's name abbreviation.")
-    ) -> str:
-        """Get the driver’s team name."""
-
-        session = get_session(latest_sesion=True)
-        return f1_plotting.get_team_name_by_driver(identifier=driver, session=session)
-
-    @mcp.tool(name="get_team_driver", description="Get the drivers of a team. You will need to provide the team's name, it's not neccesary to provide the year, round or session.")
-    async def get_team_driver(
-        team: str = Field(description="The team's name.")
-    ) -> str:
-        """Get the team's driver name."""
-
-        session = get_session(latest_sesion=True)
-        return f1_plotting.get_driver_names_by_team(identifier=team, session=session)
-
     @mcp.tool(name="get_box_laps")
     async def get_box_laps(
         type_session: str = Field(description="Type of session in general terms: official or pretest (pre-session test)"),
@@ -81,7 +127,7 @@ def register_fastf1_tools(mcp:FastMCP):
         """Get laps where the driver was in the pit box."""
 
         laps = get_laps(type_session, year, round, session,driver)
-        box_laps = laps.pick_box_laps(which="both")[["Time","Driver","LapNumber","Compound","PitOutTime","PitInTime"]]
+        box_laps = laps.pick_box_laps(which="in")[["Time","Driver","LapNumber","Compound","PitOutTime","PitInTime"]]
         return box_laps.to_json()
 
     @mcp.tool(name="get_deleted_laps")
