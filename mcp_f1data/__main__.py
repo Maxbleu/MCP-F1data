@@ -1,6 +1,6 @@
 """
-Entry point for running the FastF1 MCP server as a module.
-This allows: python -m mcp_fastf1
+Entry point for running the F1Data MCP server as a module.
+This allows: python -m mcp_f1data
 """
 
 from .server.mcp_server import main

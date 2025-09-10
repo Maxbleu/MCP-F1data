@@ -1,18 +1,26 @@
+import os
 from fastmcp import FastMCP
-from ..tools.fastf1_tools import register_fastf1_tools
+from fastmcp.server.auth import JWTVerifier
+from ..tools.f1data_tools import register_f1data_tools
 
 def create_mcp_server() -> FastMCP:
     """Create and configure the MCP server"""
-    mcp = FastMCP(
-        "mcp-f1analisys"
+
+    auth = JWTVerifier(
+        public_key=os.getenv("PUBLIC_KEY"),
+        algorithm=os.getenv("ALGORITHM")
     )
 
-    register_fastf1_tools(mcp)
+    mcp = FastMCP(
+        name="mcp-f1data",
+        auth=auth
+    )
+
+    register_f1data_tools(mcp)
     return mcp
 
 def main():
     """Main function for local development"""
-    import os
     mcp = create_mcp_server()
 
     if os.getenv("RAILWAY_ENVIRONMENT"):

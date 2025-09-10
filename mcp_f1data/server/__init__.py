@@ -1,4 +1,4 @@
-"""FastF1 MCP server components"""
+"""F1Data MCP server components"""
 
 from .mcp_server import create_mcp_server, main
 
