@@ -1,5 +1,5 @@
-"""FastF1 tools"""
+"""F1Data tools"""
 
-from .fastf1_tools import register_fastf1_tools
+from .f1data_tools import register_f1data_tools
 
-__all__ = ["register_fastf1_tools"]
+__all__ = ["register_f1data_tools"]

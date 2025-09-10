@@ -4,7 +4,7 @@ from fastmcp import FastMCP
 import fastf1.plotting as f1_plotting
 from ..utils.fastf1_utils import get_laps, get_specific_lap, get_session
 
-def register_fastf1_tools(mcp:FastMCP):
+def register_f1data_tools(mcp:FastMCP):
     """Register all F1 analysis tools with the MCP server"""
 
     @mcp.tool(name="get_drivers_standing", description="This tool will return the actual drivers standing, only indicating the year")

@@ -1,4 +1,4 @@
-"""MCP FastF1 - Formula 1 telemetry data visualization server"""
+"""MCP F1Data - Formula 1 telemetry data visualization server"""
 
 __version__ = "0.1.0"
 
