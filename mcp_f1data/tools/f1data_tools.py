@@ -13,6 +13,7 @@ def register_f1data_tools(mcp:FastMCP):
     ) -> json:
         """
         Get driver information:
+            id, str
             name, str
             first_name, str
             last_name, str
@@ -45,6 +46,24 @@ def register_f1data_tools(mcp:FastMCP):
 
         headers = {"Authorization": f"Bearer {os.getenv("JWT_TOKEN")}"}
         response = requests.get(url=f"https://apif1db-production.up.railway.app/api/drivers/{driver_id}",headers=headers)
+        if response.status_code == 200:
+            json = response.json()
+            return json
+
+    @mcp.tool(name="get_driver_family_relationship")
+    async def get_driver_family_relationship(
+        driver_id: str = Field(description="Driver's identifier")
+    ) -> json:
+        """
+        Get driver's F1 familiries of specific driver:
+            driver_id, str
+            position_display_order, int
+            other_driver_id, str
+            type, str
+        """
+
+        headers = {"Authorization": f"Bearer {os.getenv("JWT_TOKEN")}"}
+        response = requests.get(url=f"https://apif1db-production.up.railway.app/api/drivers/{driver_id}/family_relationship",headers=headers)
         if response.status_code == 200:
             json = response.json()
             return json
