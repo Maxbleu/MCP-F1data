@@ -11,7 +11,37 @@ def register_f1data_tools(mcp:FastMCP):
     async def get_driver_by_id(
         driver_id: str = Field(description="Driver's identifier")
     ) -> json:
-        """Get driver information"""
+        """
+        Get driver information:
+            name, str
+            first_name, str
+            last_name, str
+            full_name, str
+            abbreviation, str
+            permanent_number, int
+            gender, str
+            date_of_birth, date
+            date_of_death, date
+            place_of_birth, str
+            country_of_birth_country_id, str
+            nationality_country_id, str
+            second_nationality_country_id, str
+            best_championship_position, int
+            best_starting_grid_position, int
+            best_race_result, int
+            total_championship_wins, int
+            total_race_entries, int
+            total_race_starts, int
+            total_race_wins, int
+            total_race_laps, int
+            total_podiums, int
+            total_points, float
+            total_championship_points, float
+            total_pole_positions, int
+            total_fastest_laps, int
+            total_driver_of_the_day, int
+            total_grand_slams, int
+        """
 
         headers = {"Authorization": f"Bearer {os.getenv("JWT_TOKEN")}"}
         response = requests.get(url=f"https://apif1db-production.up.railway.app/api/drivers/{driver_id}",headers=headers)
