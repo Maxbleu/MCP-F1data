@@ -38,7 +38,7 @@ class ConstructorTools(BaseTools):
                 total_pole_position, int
                 total_fastest_laps, int
             """
-            result = launch_request_f1db(f"{cls._BASE_PATH}/{constructor_id}")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/{constructor_id}")
             return result
 
         @mcp.tool(name="get_constructor_chronology")
@@ -53,5 +53,5 @@ class ConstructorTools(BaseTools):
                 year_from, int
                 year_to, int
             """
-            result = launch_request_f1db(f"{cls._BASE_PATH}/{constructor_id}/chronology")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/{constructor_id}/chronology")
             return result
