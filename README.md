@@ -27,14 +27,11 @@ Add the F1Data MCP server configuration:
 ```
 
 ## Tools 
-- `fastest lap`
-- `lap`
-- `top speed`
-- `total laps`
-- `driver team`
-- `team driver`
-- `box laps`
-- `deleted laps`
+- `get driver by id`
+- `get driver family relationship`
+- `get fastest lap`
+- `get top speed`
+- `get deleted laps`
 
 ## Instalation
 Active the virtual environment and install the requirements using:
@@ -64,3 +61,4 @@ mcp dev .\server.py
 
 ## License
 This project is licensed under the MIT <a href="https://github.com/Maxbleu/mcp-f1data/blob/master/LICENSE">LICENSE</a> - see the details.
+
