@@ -6,7 +6,9 @@ from ..utils import launch_request_f1db
 
 class DriverTools(BaseTools):
     def __init__(self, mcp: FastMCP):
-        super().__init__(mcp=mcp,base_path="/drivers")
+        super().__init__(mcp=mcp)
+
+    BASE_PATH = "/drivers"
 
     @classmethod
     def __register_mcp_tools__(cls, mcp: FastMCP) -> None:
@@ -48,7 +50,7 @@ class DriverTools(BaseTools):
                 total_driver_of_the_day, int
                 total_grand_slams, int
             """
-            result = launch_request_f1db(f"/drivers/{driver_id}")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/{driver_id}")
             return result
 
         @mcp.tool(name="get_driver_family_relationship")
@@ -62,5 +64,5 @@ class DriverTools(BaseTools):
                 other_driver_id, str
                 type, str
             """
-            result = launch_request_f1db(f"/drivers/{driver_id}/family_relationship")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/{driver_id}/family_relationship")
             return result

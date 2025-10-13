@@ -2,11 +2,8 @@ from fastmcp import FastMCP
 from abc import abstractmethod
 
 class BaseTools:
-    def __init__(self, mcp_instance: FastMCP, base_path:str=""):
-        self.__BASE_PATH__ = base_path
-        self.mcp = mcp_instance
-
-    __BASE_PATH__ = ""
+    def __init__(self, mcp: FastMCP):
+        self.mcp = mcp
 
     @classmethod
     @abstractmethod
