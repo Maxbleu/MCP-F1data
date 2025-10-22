@@ -21,6 +21,16 @@ class ManufacturerTools(BaseTools):
                 id, str
                 name, str
                 country_id, str
+                best_starting_grid_position, int
+                best_race_result, int
+                total_race_entries, int
+                total_race_starts, int
+                total_race_wins, int
+                total_race_laps, int
+                total_podiums, int
+                total_podium_races, int
+                total_pole_positions, int
+                total_fastest_laps, int
             """
             result = launch_request_f1db(f"{cls.BASE_PATH}/tyres")
             return result
@@ -55,6 +65,19 @@ class ManufacturerTools(BaseTools):
                 id, str
                 name, str
                 country_id, str
+                best_championship_position, int
+                best_starting_grid_position, int
+                best_race_result, int
+                total_race_entries, int
+                total_race_starts, int
+                total_race_wins, int
+                total_race_laps, int
+                total_podiums, int
+                total_podium_races, int
+                total_points, float
+                total_championship_points, float
+                total_pole_positions, int
+                total_fastest_laps, int
             """
             result = launch_request_f1db(f"{cls.BASE_PATH}/engines")
             return result
@@ -82,5 +105,5 @@ class ManufacturerTools(BaseTools):
                 total_pole_positions, int
                 total_fastest_laps, int
             """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/engines")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/engines/{engine_manufacturer_id}")
             return result
