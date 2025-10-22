@@ -1,4 +1,5 @@
 from fastmcp import FastMCP
+from .race_tools import RaceTools
 from .driver_tools import DriverTools
 from .season_tools import SeasonTools
 from .circuit_tools import CircuitTools
@@ -17,3 +18,4 @@ def register_f1data_tools(mcp:FastMCP):
     GrandPrixTools.__register_mcp_tools__(mcp=mcp)
     ManufacturerTools.__register_mcp_tools__(mcp=mcp)
     SeasonTools.__register_mcp_tools__(mcp=mcp)
+    RaceTools.__register_mcp_tools__(mcp=mcp)
