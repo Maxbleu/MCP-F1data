@@ -88,7 +88,7 @@ class CircuitTools(BaseTools):
             result = launch_request_f1db(f"{cls.BASE_PATH}/{circuit_id}/chronology")
             return result
 
-        @mcp.tool(name="get_circuit_by_id_and_season")
+        @mcp.tool(name="get_circuit_by_id_and_year")
         async def get_circuit_by_season(
             circuit_id: str = Field(title="circuit_id", description="Circuit's identifier"),
             year: int = Field(title="year", description="Year of the season")

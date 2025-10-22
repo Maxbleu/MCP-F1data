@@ -53,8 +53,8 @@ class DriverTools(BaseTools):
             result = launch_request_f1db(f"{cls.BASE_PATH}/{driver_id}")
             return result
 
-        @mcp.tool(name="get_driver_family_relationship")
-        async def get_driver_family_relationship(
+        @mcp.tool(name="get_driver_family_relationship_by_id")
+        async def get_driver_family_relationship_by_id(
             driver_id: str = Field(title="driver_id", description="Driver's identifier")
         ) -> json:
             """
@@ -67,8 +67,8 @@ class DriverTools(BaseTools):
             result = launch_request_f1db(f"{cls.BASE_PATH}/{driver_id}/family_relationship")
             return result
 
-        @mcp.tool(name="get_driver_career")
-        async def get_driver_career(
+        @mcp.tool(name="get_driver_career_by_id")
+        async def get_driver_career_by_id(
             driver_id: str = Field(title="driver_id", description="Driver's identifier")
         ) -> json:
             """
