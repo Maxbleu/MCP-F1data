@@ -14,9 +14,9 @@ class CircuitTools(BaseTools):
     def __register_mcp_tools__(cls, mcp: FastMCP) -> None:
         """Register all circuit tools with MCP"""
 
-        @mcp.tool(name="get_circuit_by_id")
-        async def get_circuit_by_id(
-            circuit_id: str = Field(title="circuit_id", description="Circuit's identifier")
+        @mcp.tool(name="search_circuit")
+        async def search_circuit(
+            circuit: str = Field(title="circuit", description="Circuit's name")
         ) -> json:
             """
             Get circuit information:
@@ -33,8 +33,14 @@ class CircuitTools(BaseTools):
                 direction, str
                 country_id, str
                 longitude, float
+
+            IMPORTANT
+            In the parameter indicate only 
+            the circuit's name e.g:
+                - I want to know about Imola's circuit, Enzo Dino Ferrari -> Enzo Dino Ferrari
+                - Avus -> Avus
             """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/{circuit_id}")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/search",data={"circuit":circuit})
             return result
 
         @mcp.tool(name="get_circuit_chronology_by_id")
