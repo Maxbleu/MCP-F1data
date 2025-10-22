@@ -14,12 +14,13 @@ class ManufacturerTools(BaseTools):
     def __register_mcp_tools__(cls, mcp: FastMCP) -> None:
         """Register all manufacturer tools with MCP"""
 
-        @mcp.tool(name="get_tyres_manufacturer_by_id")
-        async def get_tyres_manufacturer_by_id(
-            tyre_manufacturer_id: str = Field(title="tyre_manufacturer_id", description="Tyre manufacturer's identifier")
+        @mcp.tool(name="search_tyre_manufacturer")
+        async def search_tyre_manufacturer(
+            tyre_manufacturer: str = Field(title="tyre_manufacturer", description="Tyre manufacturer's name")
         ) -> json:
             """
-            Get stats tyre manufacturer along of F1 history:
+            Search a scpecific tyre manufacturer along of F1 history.
+            Use it when you are searching only one:
                 id, str
                 name, str
                 country_id, str
@@ -34,15 +35,16 @@ class ManufacturerTools(BaseTools):
                 total_pole_positions, int
                 total_fastest_laps, int
             """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/tyres/{tyre_manufacturer_id}")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/tyres/seach",data={"tyre_manufacturer":tyre_manufacturer})
             return result
 
-        @mcp.tool(name="get_engine_manufacturer_by_id")
-        async def get_engine_manufacturer_by_id(
-            engine_manufacturer_id: str = Field(title="engine_manufacturer_id", description="Engine manufacturer's identifier")
+        @mcp.tool(name="search_engine_manufacturer")
+        async def search_engine_manufacturer(
+            engine_manufacturer: str = Field(title="engine_manufacturer", description="Engine manufacturer's name")
         ) -> json:
             """
-            Get stats engine manufacturer along of F1 history:
+            Search a scpecific engine manufacturer along of F1 history.
+            Use it when you are searching only one:
                 id, str
                 name, str
                 country_id, str
@@ -60,5 +62,5 @@ class ManufacturerTools(BaseTools):
                 total_pole_positions, int
                 total_fastest_laps, int
             """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/engines/{engine_manufacturer_id}")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/engines/search", data={"engine_manufacturer":engine_manufacturer})
             return result
