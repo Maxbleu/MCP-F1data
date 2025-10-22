@@ -85,7 +85,7 @@ class CircuitTools(BaseTools):
                 grand_prix, obj
                 circuit, ob
             """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/{circuit_id}")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/{circuit_id}/chronology")
             return result
 
         @mcp.tool(name="get_circuit_by_id_and_season")
