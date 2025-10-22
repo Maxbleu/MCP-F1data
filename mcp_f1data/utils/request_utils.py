@@ -20,10 +20,10 @@ def launch_request_f1db(path: str, data={}):
                 allow_redirects=allow_redirects
             )
         elif len(data) > 0:
-            response = requests.get(
+            response = requests.post(
                 url=url,
                 headers=headers,
-                data=data,
+                json=data,
                 timeout=timeout,
                 allow_redirects=allow_redirects
             )

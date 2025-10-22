@@ -35,7 +35,7 @@ class ManufacturerTools(BaseTools):
                 total_pole_positions, int
                 total_fastest_laps, int
             """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/tyres/seach",data={"tyre_manufacturer":tyre_manufacturer})
+            result = launch_request_f1db(f"{cls.BASE_PATH}/tyres/search",data={"tyre_manufacturer":tyre_manufacturer})
             return result
 
         @mcp.tool(name="search_engine_manufacturer")
