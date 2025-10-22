@@ -16,7 +16,7 @@ class GrandPrixTools(BaseTools):
 
         @mcp.tool(name="search_grand_prix")
         async def search_grand_prix(
-            grand_prix: str = Field(title="grand_prix", description="Grand Prix's name. Eg: Japan GP, SÃ£o Paulo GP")
+            grand_prix: str = Field(title="grand_prix", description="Grand Prix's name")
         ) -> json:
             """
             Get grand prix historical information.
@@ -28,6 +28,12 @@ class GrandPrixTools(BaseTools):
                 id, str
                 full_name, str
                 country_id, str
+            
+            IMPORTANT: Grand Prix Names
+            Always convert to English GP format:
+                - "gran premio de eifel" -> "Eifel GP"
+                - "toscana" -> "Tuscany GP"
+                - "españa" -> "Spanish GP"
             """
             result = launch_request_f1db(f"{cls.BASE_PATH}/search",data={"grand_prix":grand_prix})
             return result
