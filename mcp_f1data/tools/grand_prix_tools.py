@@ -16,7 +16,7 @@ class GrandPrixTools(BaseTools):
 
         @mcp.tool(name="search_grand_prix")
         async def search_grand_prix(
-            grand_prix: str = Field(title="grand_prix", description="Grand Prix's name")
+            grand_prix: str = Field(title="grand_prix", description="Grand Prix's name. Eg: Japan GP, SÃ£o Paulo GP")
         ) -> json:
             """
             Get grand prix historical information.
