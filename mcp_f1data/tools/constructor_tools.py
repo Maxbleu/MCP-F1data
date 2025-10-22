@@ -41,7 +41,7 @@ class ConstructorTools(BaseTools):
             result = launch_request_f1db(f"{cls.BASE_PATH}/{constructor_id}")
             return result
 
-        @mcp.tool(name="get_constructor_chronology")
+        @mcp.tool(name="get_constructor_chronology_id")
         async def get_constructor_chronology(
             constructor_id: str = Field(title="constructor_id", description="Constructor's identifier")
         ) -> json:
@@ -68,7 +68,7 @@ class ConstructorTools(BaseTools):
             result = launch_request_f1db(f"{cls.BASE_PATH}/{constructor_id}/chronology")
             return result
 
-        @mcp.tool(name="get_constructor_drivers")
+        @mcp.tool(name="get_constructor_drivers_id")
         async def get_constructor_drivers(
             constructor_id: str = Field(title="constructor_id", description="Constructor's identifier")
         ) -> json:
@@ -84,7 +84,7 @@ class ConstructorTools(BaseTools):
             result = launch_request_f1db(f"{cls.BASE_PATH}/{constructor_id}/drivers")
             return result
 
-        @mcp.tool(name="get_constructor_drivers_by_season")
+        @mcp.tool(name="get_constructor_drivers_by_id_and_season")
         async def get_constructor_drivers_by_season(
             constructor_id: str = Field(title="constructor_id", description="Constructor's identifier"),
             year: int = Field(title="year", description="Year of the season")
