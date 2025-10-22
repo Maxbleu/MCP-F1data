@@ -16,7 +16,7 @@ class DriverTools(BaseTools):
 
         @mcp.tool(name="get_driver_by_id")
         async def get_driver_by_id(
-            driver_id: str = Field(description="Driver's identifier")
+            driver_id: str = Field(title="driver_id", description="Driver's identifier")
         ) -> json:
             """
             Get driver information:
@@ -55,14 +55,30 @@ class DriverTools(BaseTools):
 
         @mcp.tool(name="get_driver_family_relationship")
         async def get_driver_family_relationship(
-            driver_id: str = Field(description="Driver's identifier")
+            driver_id: str = Field(title="driver_id", description="Driver's identifier")
         ) -> json:
             """
-            Get driver's F1 families of specific driver:
-                driver_id, str
+            Get driver's F1 families list of specific driver:
                 position_display_order, int
-                other_driver_id, str
+                driver_id, str
                 type, str
+                other_driver, obj
             """
             result = launch_request_f1db(f"{cls.BASE_PATH}/{driver_id}/family_relationship")
+            return result
+
+        @mcp.tool(name="get_driver_career")
+        async def get_driver_career(
+            driver_id: str = Field(title="driver_id", description="Driver's identifier")
+        ) -> json:
+            """
+            Get driver's F1 career list of specific constructors, which drives in the past:
+                engine_manufacturer_id, str
+                constructor_id, str
+                year, int
+                rounds, str
+                entrant, obj
+                driver, obj
+            """
+            result = launch_request_f1db(f"{cls.BASE_PATH}/{driver_id}/career")
             return result
