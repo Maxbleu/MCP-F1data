@@ -14,9 +14,9 @@ class ConstructorTools(BaseTools):
     def __register_mcp_tools__(cls, mcp: FastMCP) -> None:
         """Register all constructor tools with MCP"""
 
-        @mcp.tool(name="get_constructor_by_id")
-        async def get_constructor_by_id(
-            constructor_id: str = Field(title="constructor_id", description="Constructor's identifier")
+        @mcp.tool(name="search_constructor")
+        async def search_constructor(
+            constructor: str = Field(title="constructor", description="Constructor's name")
         ) -> json:
             """
             Get constructor information:
@@ -37,8 +37,15 @@ class ConstructorTools(BaseTools):
                 total_championship_points, float
                 total_pole_position, int
                 total_fastest_laps, int
+
+                IMPORTANT
+                In the parameter indicate only 
+                the constructor's name e.g:
+                    - I want to know about Mercedes -> Mercedes
+                    - Behra Porsche -> Behra Porsche
+                    - Matra -> Matra
             """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/{constructor_id}")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/search",data={"constructor":constructor})
             return result
 
         @mcp.tool(name="get_constructor_chronology_id")
