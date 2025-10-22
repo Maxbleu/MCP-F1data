@@ -14,12 +14,13 @@ class GrandPrixTools(BaseTools):
     def __register_mcp_tools__(cls, mcp: FastMCP) -> None:
         """Register all grand prix tools with MCP"""
 
-        @mcp.tool(name="get_grand_prix_by_id")
-        async def get_grand_prix_by_id(
-            grand_prix_id: str = Field(title="grand_prix_id", description="Grand Prix's identifier")
+        @mcp.tool(name="search_grand_prix")
+        async def search_grand_prix(
+            grand_prix: str = Field(title="grand_prix", description="Grand Prix's name")
         ) -> json:
             """
-            Get grand prix historical information:
+            Get grand prix historical information.
+            Use it when you are searching only one:
                 abbreviation, str
                 name, str
                 total_races_held, int
@@ -28,7 +29,7 @@ class GrandPrixTools(BaseTools):
                 full_name, str
                 country_id, str
             """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/{grand_prix_id}")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/search",data={"grand_prix":grand_prix})
             return result
 
         @mcp.tool(name="get_grand_prix_by_id_and_year")
