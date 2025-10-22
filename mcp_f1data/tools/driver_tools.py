@@ -14,9 +14,9 @@ class DriverTools(BaseTools):
     def __register_mcp_tools__(cls, mcp: FastMCP) -> None:
         """Register all driver tools with MCP"""
 
-        @mcp.tool(name="get_driver_by_id")
-        async def get_driver_by_id(
-            driver_id: str = Field(title="driver_id", description="Driver's identifier")
+        @mcp.tool(name="search_driver")
+        async def search_driver(
+            driver: str = Field(title="driver", description="Driver's name")
         ) -> json:
             """
             Get driver information:
@@ -49,8 +49,15 @@ class DriverTools(BaseTools):
                 total_fastest_laps, int
                 total_driver_of_the_day, int
                 total_grand_slams, int
+
+                IMPORTANT
+                In the parameter indicate only 
+                the constructor's name e.g:
+                    - I want to know about Fernando Alonso -> Fernando Alonso
+                    - Michael Schumacher -> Michael Schumacher
+                    - Alain Prost -> Alain Prost
             """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/{driver_id}")
+            result = launch_request_f1db(f"{cls.BASE_PATH}/search",data={"driver":driver})
             return result
 
         @mcp.tool(name="get_driver_family_relationship_by_id")
