@@ -88,7 +88,7 @@ class GrandPrixTools(BaseTools):
             grand_prix_id: str = Field(title="grand_prix_id", description="Grand Prix's identifier")
         ) -> json:
             """
-            Get a list of F1 Grands Prix held at different circuits:
+            Get a list of specific F1 Grands Prix held at circuits at long of F1 history:
                 date, str
                 drivers_championship_decider, bool
                 qualifying_1_time, str
