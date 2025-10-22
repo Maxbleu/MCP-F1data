@@ -1,9 +1,10 @@
 from fastmcp import FastMCP
 from .driver_tools import DriverTools
-from .telemetry_tools import TelemetryTools
-from .constructor_tools import ConstructorTools
+from .season_tools import SeasonTools
 from .circuit_tools import CircuitTools
+from .telemetry_tools import TelemetryTools
 from .grand_prix_tools import GrandPrixTools
+from .constructor_tools import ConstructorTools
 from .manufacturer_tools import ManufacturerTools
 
 def register_f1data_tools(mcp:FastMCP):
@@ -15,3 +16,4 @@ def register_f1data_tools(mcp:FastMCP):
     CircuitTools.__register_mcp_tools__(mcp=mcp)
     GrandPrixTools.__register_mcp_tools__(mcp=mcp)
     ManufacturerTools.__register_mcp_tools__(mcp=mcp)
+    SeasonTools.__register_mcp_tools__(mcp=mcp)
