@@ -1,8 +1,6 @@
 import fastf1
-import fastf1.events
 import pandas as pd
 from pandas import DataFrame
-from datetime import datetime
 from fastapi import HTTPException
 
 def get_latest_session():
