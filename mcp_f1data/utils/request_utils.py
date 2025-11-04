@@ -9,7 +9,7 @@ def launch_request_f1db(path: str, data={}):
     session = requests.Session()
     session.headers.update(headers)
     try:
-        url = f"https://apif1db.aifone.site/api{path}"
+        url = f"http://apif1db.railway.internal:8000/api{path}"
         timeout = 10
         allow_redirects = True
         if not data:
