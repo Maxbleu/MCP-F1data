@@ -9,7 +9,7 @@ def launch_request_f1db(path: str, data={}):
     session = requests.Session()
     session.headers.update(headers)
     try:
-        url = f"http://{os.getenv("APIF1DB_PRIVATE_NETWORK")}/api{path}"
+        url = f"{os.getenv("APIF1DB_PRIVATE_NETWORK_BASE_PATH")}{path}"
         timeout = 10
         allow_redirects = True
         if not data:
