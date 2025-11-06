@@ -54,6 +54,7 @@ The requirementes used to build this MCP server are:
 - `websockets`
 - `mcp`
 - `pydantic`
+- `fastapi`
 
 ## Testing 
 You can test the server using the MCP Inspector:
@@ -63,5 +64,6 @@ mcp dev .\server.py
 
 ## License
 This project is licensed under the MIT <a href="https://github.com/Maxbleu/mcp-f1data/blob/master/LICENSE">LICENSE</a> - see the details.
+
 
 
