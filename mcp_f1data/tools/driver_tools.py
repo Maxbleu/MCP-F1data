@@ -19,6 +19,10 @@ class DriverTools(BaseTools):
             driver: str = Field(title="driver", description="Driver's name")
         ) -> json:
             """
+            Parameters: 
+            - driver: Driver's name
+
+            Return:
             Get driver information:
                 id, str
                 name, str
