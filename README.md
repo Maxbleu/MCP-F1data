@@ -74,7 +74,7 @@ created by the F1DB contributors, licensed under the
 
 The original data has been:
 - Imported and structured into a PostgreSQL database
-- Exposed through a custom REST API
+- Exposed through a custom MCP
 - Optimized for efficient querying
 
 The original data is provided "as-is" without warranties of any kind, 
@@ -83,4 +83,5 @@ as per the terms of the CC BY 4.0 license.
 For complete attribution details, see [ATTRIBUTIONS.md](./ATTRIBUTIONS.md)..
 
 ## Notice
+
 MCPF1Data is unofficial and are not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.
