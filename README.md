@@ -83,4 +83,4 @@ as per the terms of the CC BY 4.0 license.
 For complete attribution details, see [ATTRIBUTIONS.md](./ATTRIBUTIONS.md)..
 
 ## Notice
-F1Analisys is unofficial and are not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.
+MCPF1Data is unofficial and are not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.
