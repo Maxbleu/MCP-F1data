@@ -62,8 +62,25 @@ You can test the server using the MCP Inspector:
 mcp dev .\server.py
 ```
 
-## License
-This project is licensed under the MIT <a href="https://github.com/Maxbleu/mcp-f1data/blob/master/LICENSE">LICENSE</a> - see the details.
+## 📜 Licenses
 
+### Source Code
+The source code of this project is licensed under the [Apache License 2.0](./LICENSE).
 
+### Data
+This project uses Formula 1 data from [**F1DB**](https://github.com/f1db/f1db) 
+created by the F1DB contributors, licensed under the 
+[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) license.
 
+The original data has been:
+- Imported and structured into a PostgreSQL database
+- Exposed through a custom REST API
+- Optimized for efficient querying
+
+The original data is provided "as-is" without warranties of any kind, 
+as per the terms of the CC BY 4.0 license.
+
+For complete attribution details, see [ATTRIBUTIONS.md](./ATTRIBUTIONS.md)..
+
+## Notice
+F1Analisys is unofficial and are not associated in any way with the Formula 1 companies. F1, FORMULA ONE, FORMULA 1, FIA FORMULA ONE WORLD CHAMPIONSHIP, GRAND PRIX and related marks are trade marks of Formula One Licensing B.V.
