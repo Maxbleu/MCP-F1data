@@ -53,7 +53,10 @@ class ExecutionTools:
 
         @mcp.tool(name="execute_python")
         async def execute_python(
-            code: str = Field(title="code", description="Python code to execute")
+            code: str,
+            year: int = 2025,
+            input: str = "",
+            toolCallId: str = ""
         ) -> str:
             """
             Execute Python code that can use the F1 data tools.
