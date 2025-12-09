@@ -5,105 +5,90 @@ from .base_tools import BaseTools
 from ..utils import launch_request_f1db
 
 class ConstructorTools(BaseTools):
-    def __init__(self, mcp: FastMCP):
-        super().__init__(mcp=mcp)
 
     BASE_PATH = "/constructors"
 
-    @classmethod
-    def __register_mcp_tools__(cls, mcp: FastMCP) -> None:
-        """Register all constructor tools with MCP"""
+    @staticmethod
+    def search_constructor(constructor: str) -> json:
+        """
+        Get constructor information:
+            id, str
+            name, str
+            full_name, str
+            country, str
+            best_championship_position, int
+            best_race_result, int
+            total_championship_wins, int
+            total_race_entries, int
+            total_race_start, int
+            total_race_wins, int
+            total_1_and_2_finishes, int
+            total_race_laps, int
+            total_podium_races, int
+            total_points, float
+            total_championship_points, float
+            total_pole_position, int
+            total_fastest_laps, int
 
-        @mcp.tool(name="search_constructor")
-        async def search_constructor(
-            constructor: str = Field(title="constructor", description="Constructor's name")
-        ) -> json:
-            """
-            Get constructor information:
-                id, str
-                name, str
-                full_name, str
-                country, str
-                best_championship_position, int
-                best_race_result, int
-                total_championship_wins, int
-                total_race_entries, int
-                total_race_start, int
-                total_race_wins, int
-                total_1_and_2_finishes, int
-                total_race_laps, int
-                total_podium_races, int
-                total_points, float
-                total_championship_points, float
-                total_pole_position, int
-                total_fastest_laps, int
+            IMPORTANT
+            In the parameter indicate only 
+            the constructor's name e.g:
+                - I want to know about Mercedes -> Mercedes
+                - Behra Porsche -> Behra Porsche
+                - Matra -> Matra
+        """
+        result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/search",data={"constructor":constructor})
+        return result
 
-                IMPORTANT
-                In the parameter indicate only 
-                the constructor's name e.g:
-                    - I want to know about Mercedes -> Mercedes
-                    - Behra Porsche -> Behra Porsche
-                    - Matra -> Matra
-            """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/search",data={"constructor":constructor})
-            return result
+    @staticmethod
+    def get_constructor_chronology(constructor_id: str) -> json:
+        """
+        Get constructor's F1 chronology list F1 history of specific constructor:
+            id, str
+            name, str
+            full_name, str
+            country, str
+            best_championship_position, int
+            best_race_result, int
+            total_championship_wins, int
+            total_race_entries, int
+            total_race_start, int
+            total_race_wins, int
+            total_1_and_2_finishes, int
+            total_race_laps, int
+            total_podium_races, int
+            total_points, float
+            total_championship_points, float
+            total_pole_position, int
+            total_fastest_laps, int
+        """
+        result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/{constructor_id}/chronology")
+        return result
 
-        @mcp.tool(name="get_constructor_chronology_id")
-        async def get_constructor_chronology(
-            constructor_id: str = Field(title="constructor_id", description="Constructor's identifier")
-        ) -> json:
-            """
-            Get constructor's F1 chronology list F1 history of specific constructor:
-                id, str
-                name, str
-                full_name, str
-                country, str
-                best_championship_position, int
-                best_race_result, int
-                total_championship_wins, int
-                total_race_entries, int
-                total_race_start, int
-                total_race_wins, int
-                total_1_and_2_finishes, int
-                total_race_laps, int
-                total_podium_races, int
-                total_points, float
-                total_championship_points, float
-                total_pole_position, int
-                total_fastest_laps, int
-            """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/{constructor_id}/chronology")
-            return result
+    @staticmethod
+    def get_constructor_drivers(constructor_id: str) -> json:
+        """
+        Get constructor's F1 drivers list F1 history of specific constructor:
+            engine_manufacturer_id, str
+            constructor_id, str
+            year, int
+            rounds", str
+            entrant, obj
+            driver, obj
+        """
+        result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/{constructor_id}/drivers")
+        return result
 
-        @mcp.tool(name="get_constructor_drivers_id")
-        async def get_constructor_drivers(
-            constructor_id: str = Field(title="constructor_id", description="Constructor's identifier")
-        ) -> json:
-            """
-            Get constructor's F1 drivers list F1 history of specific constructor:
-                engine_manufacturer_id, str
-                constructor_id, str
-                year, int
-                rounds", str
-                entrant, obj
-                driver, obj
-            """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/{constructor_id}/drivers")
-            return result
-
-        @mcp.tool(name="get_constructor_drivers_by_id_and_year")
-        async def get_constructor_drivers_by_season(
-            constructor_id: str = Field(title="constructor_id", description="Constructor's identifier"),
-            year: int = Field(title="year", description="Year of the season")
-        ) -> json:
-            """
-            Get constructor's F1 drivers list about one constructor in specific season:
-                engine_manufacturer_id, str
-                constructor_id, str
-                year, int
-                rounds", str
-                entrant, obj
-                driver, obj
-            """
-            result = launch_request_f1db(f"{cls.BASE_PATH}/{constructor_id}/{year}/drivers")
-            return result
+    @staticmethod
+    def get_constructor_drivers_by_season(constructor_id: str, year: int) -> json:
+        """
+        Get constructor's F1 drivers list about one constructor in specific season:
+            engine_manufacturer_id, str
+            constructor_id, str
+            year, int
+            rounds", str
+            entrant, obj
+            driver, obj
+        """
+        result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/{constructor_id}/{year}/drivers")
+        return result

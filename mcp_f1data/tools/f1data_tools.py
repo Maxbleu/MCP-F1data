@@ -1,19 +1,7 @@
 from fastmcp import FastMCP
-from .race_tools import RaceTools
-from .driver_tools import DriverTools
-from .season_tools import SeasonTools
-from .circuit_tools import CircuitTools
-from .grand_prix_tools import GrandPrixTools
-from .constructor_tools import ConstructorTools
-from .manufacturer_tools import ManufacturerTools
+from .execution_tools import ExecutionTools
 
 def register_f1data_tools(mcp:FastMCP):
     """Register all F1 tools with the MCP server"""
 
-    DriverTools.__register_mcp_tools__(mcp=mcp)
-    ConstructorTools.__register_mcp_tools__(mcp=mcp)
-    CircuitTools.__register_mcp_tools__(mcp=mcp)
-    GrandPrixTools.__register_mcp_tools__(mcp=mcp)
-    ManufacturerTools.__register_mcp_tools__(mcp=mcp)
-    SeasonTools.__register_mcp_tools__(mcp=mcp)
-    RaceTools.__register_mcp_tools__(mcp=mcp)
+    ExecutionTools.__register_mcp_tools__(mcp=mcp)
