@@ -1,9 +1,10 @@
-import json
+from io import StringIO
+import json, sys, traceback
 from fastmcp import FastMCP
-from pydantic import Field
-from .driver_tools import DriverTools
+from datetime import datetime
 from .race_tools import RaceTools
 from .season_tools import SeasonTools
+from .driver_tools import DriverTools
 from .circuit_tools import CircuitTools
 from .grand_prix_tools import GrandPrixTools
 from .constructor_tools import ConstructorTools
@@ -15,37 +16,60 @@ class ExecutionTools:
         """
         Execute Python code that can use the F1 data tools.
         """
-        # Define the environment with available tools
-        env = {
-            "json": json,
-            "DriverTools": DriverTools,
-            "RaceTools": RaceTools,
-            "SeasonTools": SeasonTools,
-            "CircuitTools": CircuitTools,
-            "GrandPrixTools": GrandPrixTools,
-            "ConstructorTools": ConstructorTools,
-            "ManufacturerTools": ManufacturerTools,
-        }
-        
-        # Add individual functions to env for convenience
-        tool_classes = [
-            DriverTools, RaceTools, SeasonTools, CircuitTools, 
-            GrandPrixTools, ConstructorTools, ManufacturerTools
-        ]
-        
-        for tool_cls in tool_classes:
-            for attr_name in dir(tool_cls):
-                attr = getattr(tool_cls, attr_name)
-                if isinstance(attr, staticmethod) or (callable(attr) and not attr_name.startswith("_")):
-                        env[attr_name] = attr
+        old_stdout = sys.stdout
+        sys.stdout = StringIO()
+        try:
+            # Define the environment with available tools
+            env = {
+                "json": json,
+                "DriverTools": DriverTools,
+                "RaceTools": RaceTools,
+                "SeasonTools": SeasonTools,
+                "CircuitTools": CircuitTools,
+                "GrandPrixTools": GrandPrixTools,
+                "ConstructorTools": ConstructorTools,
+                "ManufacturerTools": ManufacturerTools,
+            }
+            
+            # Add individual functions to env for convenience
+            tool_classes = [
+                DriverTools, RaceTools, SeasonTools, CircuitTools, 
+                GrandPrixTools, ConstructorTools, ManufacturerTools
+            ]
+            
+            for tool_cls in tool_classes:
+                for attr_name in dir(tool_cls):
+                    attr = getattr(tool_cls, attr_name)
+                    if isinstance(attr, staticmethod) or (callable(attr) and not attr_name.startswith("_")):
+                            env[attr_name] = attr
 
-        local_env = {}
-        exec(code, env, local_env)
+            local_env = {}
+            exec(code, env, local_env)
 
-        if "result" in local_env:
-            return str(local_env["result"])
+            output = sys.stdout.getvalue()
+
+            if "result" in local_env:
+                result_value = local_env["result"]
+                if isinstance(result_value, (dict, list)):
+                    return json.dumps(result_value, indent=2, default=str)
+                return str(result_value)
+            elif output:
+                return output.strip()
+                
+            return "Execution successful. Define a variable named 'result' to return data."
+        except KeyError as e:
+            # ← AQUÍ CAPTURAMOS el KeyError: 0
+            return f"❌ KeyError: Cannot access key/index {e}.\n\nPossible causes:\n- Trying to access dicts[{e}] when dicts is empty\n- Dictionary missing key '{e}'\n\nGenerated code:\n{code}\n\nTip: Add validation like 'if dicts and len(dicts) > 0' before accessing."
         
-        return "Execution successful. Define a variable named 'result' to return data."
+        except IndexError as e:
+            return f"❌ IndexError: {str(e)}\n\nTrying to access an index that doesn't exist.\n\nCode:\n{code}"
+        
+        except Exception as e:
+            tb = traceback.format_exc()
+            return f"❌ Error executing code:\n{type(e).__name__}: {str(e)}\n\nFull traceback:\n{tb}\n\nCode that failed:\n{code}"
+        
+        finally:
+            sys.stdout = old_stdout
 
     @classmethod
     def __register_mcp_tools__(cls, mcp: FastMCP) -> None:
@@ -54,7 +78,7 @@ class ExecutionTools:
         @mcp.tool(name="execute_python")
         async def execute_python(
             code: str,
-            year: int = 2025,
+            year: int = datetime.now().year,
             input: str = "",
             toolCallId: str = ""
         ) -> str:
