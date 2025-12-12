@@ -11,7 +11,46 @@ class SeasonTools(BaseTools):
     BASE_PATH = "/seasons"
 
     @staticmethod
-    def get_season_constructors_by_year(year: int) -> json:
+    def get_season_grand_prix_by_year(year: int) -> json:
+        """
+        Get a list of every grand prix of the season:
+            id, str
+            year, int
+            round, int
+            grand_prix_id, str
+            circuit_id, str
+        """
+        result = launch_request_f1db(f"{SeasonTools.BASE_PATH}/{year}/grand_prix")
+        return result
+
+    @staticmethod
+    def get_grand_prix_by_race_id(year: int, race_id: int) -> json:
+        """
+        Get a grand prix in specific season:
+            id, str
+            year, int
+            round, int
+            grand_prix_id, str
+            circuit_id, str
+        """
+        result = launch_request_f1db(f"{SeasonTools.BASE_PATH}/{year}/grand_prix/{race_id}")
+        return result
+
+    @staticmethod
+    def get_grand_prix_by_year_and_round(year: int, round: int) -> json:
+        """
+        Get a grand prix in specific season:
+            id, str
+            year, int
+            round, int
+            grand_prix_id, str
+            circuit_id, str
+        """
+        result = launch_request_f1db(f"{SeasonTools.BASE_PATH}/{year}/{round}")
+        return result
+
+    @staticmethod
+    def get_constructor_by_year(year: int) -> json:
         """
         Get list of every entrant constructor of the season:
             engine_manufacturer_id, str
@@ -23,7 +62,7 @@ class SeasonTools(BaseTools):
         return result
 
     @staticmethod
-    def get_season_constructors_by_year_and_constructor_id(year: int, constructor_id: str) -> json:
+    def get_constructor_by_year_and_constructor_id(year: int, constructor_id: str) -> json:
         """
         Get a specific constructor of the season:
             engine_manufacturer_id, str
@@ -35,7 +74,7 @@ class SeasonTools(BaseTools):
         return result
 
     @staticmethod
-    def get_season_drivers_by_year(year: int) -> json:
+    def get_driver_by_year(year: int) -> json:
         """
         Get list of every entrant drivers of the season:
             constructor_id, str
@@ -49,7 +88,7 @@ class SeasonTools(BaseTools):
         return result
 
     @staticmethod
-    def get_season_drivers_by_year_and_driver_id(year: int, driver_id: str) -> json:
+    def get_driver_by_year_and_driver_id(year: int, driver_id: str) -> json:
         """
         Get a specific driver of the season:
             constructor_id, str
@@ -63,7 +102,7 @@ class SeasonTools(BaseTools):
         return result
 
     @staticmethod
-    def get_season_tyres_by_year(year: int) -> json:
+    def get_tyres_stats_by_year(year: int) -> json:
         """
         Get a list of every tyre's stats of the season:
             best_starting_grid_position, int
@@ -83,7 +122,7 @@ class SeasonTools(BaseTools):
         return result
 
     @staticmethod
-    def get_season_engines_by_year(year: int) -> json:
+    def get_engines_stats_by_year(year: int) -> json:
         """
         Get a list of every engine's stats of the season:
             best_starting_grid_position, int
@@ -106,7 +145,7 @@ class SeasonTools(BaseTools):
         return result
 
     @staticmethod
-    def get_season_chassis_by_year(year: int) -> json:
+    def get_chassis_by_year(year: int) -> json:
         """
         Get a list of every constructor's chassis of the season:
             year, int
@@ -118,7 +157,7 @@ class SeasonTools(BaseTools):
         return result
 
     @staticmethod
-    def get_season_driver_standing_by_year(year: int) -> json:
+    def get_driver_standing_by_year(year: int) -> json:
         """
         Get a list of drivers standing of the season:
             driver_id, str
@@ -132,7 +171,21 @@ class SeasonTools(BaseTools):
         return result
 
     @staticmethod
-    def get_season_constructor_standing_by_year(year: int) -> json:
+    def get_driver_standing_specific_by_year_and_driver_id(year: int, driver_id: str) -> json:
+        """
+        Get a driver standing in specific season:
+            driver_id, str
+            year, int
+            position_display_order, int
+            position_number, int
+            position_text, str
+            points, float
+        """
+        result = launch_request_f1db(f"{SeasonTools.BASE_PATH}/{year}/standing/drivers/{driver_id}")
+        return result
+
+    @staticmethod
+    def get_constructor_standing_by_year(year: int) -> json:
         """
         Get a list of every constructor's chassis of the season:
             position_text, str
@@ -147,14 +200,15 @@ class SeasonTools(BaseTools):
         return result
 
     @staticmethod
-    def get_season_races_by_year(year: int) -> json:
+    def get_constructor_standing_specific_by_year_and_constructor_id(year: int, constructor_id: str) -> json:
         """
-        Get a list of every race of the season:
-            id, str
+        Get a constructor standing in specific season:
+            constructor_id, str
             year, int
-            round, int
-            grand_prix_id, str
-            circuit_id, str
+            position_display_order, int
+            position_number, int
+            position_text, str
+            points, float
         """
-        result = launch_request_f1db(f"{SeasonTools.BASE_PATH}/{year}/races")
+        result = launch_request_f1db(f"{SeasonTools.BASE_PATH}/{year}/standing/constructors/{constructor_id}")
         return result

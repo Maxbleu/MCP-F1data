@@ -199,8 +199,3 @@ class RaceTools(BaseTools):
     def get_constructor_standing_by_id_and_constructor(race_id: int, constructor_id: str) -> json:
         """Get constructor standing of specific race"""
         return launch_request_f1db(f"{RaceTools.BASE_PATH}/{race_id}/constructor_standing/{constructor_id}")
-
-    @staticmethod
-    def get_race_by_year_and_round(year: int, round: int) -> json:
-        """Get a specific race by year and specific round"""
-        return launch_request_f1db(f"{RaceTools.BASE_PATH}/{year}/{round}")
