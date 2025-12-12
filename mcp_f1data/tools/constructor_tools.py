@@ -78,17 +78,3 @@ class ConstructorTools(BaseTools):
         """
         result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/{constructor_id}/drivers")
         return result
-
-    @staticmethod
-    def get_constructor_drivers_by_season(constructor_id: str, year: int) -> json:
-        """
-        Get constructor's F1 drivers list about one constructor in specific season:
-            engine_manufacturer_id, str
-            constructor_id, str
-            year, int
-            rounds", str
-            entrant, obj
-            driver, obj
-        """
-        result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/{constructor_id}/{year}/drivers")
-        return result

@@ -1,5 +1,4 @@
 import json
-from pydantic import Field
 from fastmcp import FastMCP
 from .base_tools import BaseTools
 from ..utils import launch_request_f1db
@@ -71,6 +70,20 @@ class SeasonTools(BaseTools):
             entrant, obj
         """
         result = launch_request_f1db(f"{SeasonTools.BASE_PATH}/{year}/constructors/{constructor_id}")
+        return result
+
+    @staticmethod
+    def get_constructor_drivers_by_year_constructor_id(year: int, constructor_id: str) -> json:
+        """
+        Get constructor's F1 drivers list about one constructor in specific season:
+            engine_manufacturer_id, str
+            constructor_id, str
+            year, int
+            rounds", str
+            entrant, obj
+            driver, obj
+        """
+        result = launch_request_f1db(f"{SeasonTools.BASE_PATH}/{year}/constructors/{constructor_id}/drivers")
         return result
 
     @staticmethod
