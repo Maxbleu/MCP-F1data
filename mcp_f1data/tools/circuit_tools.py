@@ -131,3 +131,21 @@ class CircuitTools(BaseTools):
         """
         result = launch_request_f1db(f"{CircuitTools.BASE_PATH}/{circuit_id}/{year}")
         return result
+
+    @staticmethod
+    def get_circuit_drivers_championship_decider_by_id(circuit_id:str) -> json:
+        """
+        Get from a specific circuit times when a driver
+        get the drivers championship
+        """
+        result = launch_request_f1db(f"{CircuitTools.BASE_PATH}/{circuit_id}/championship_decider/drivers")
+        return result
+
+    @staticmethod
+    def get_circuit_constructors_championship_decider_by_id(circuit_id:str) -> json:
+        """
+        Get from a specific circuit times when a driver
+        get the drivers championship
+        """
+        result = launch_request_f1db(f"{CircuitTools.BASE_PATH}/{circuit_id}/championship_decider/constructors")
+        return result
