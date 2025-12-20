@@ -11,6 +11,14 @@ class DriverTools(BaseTools):
     BASE_PATH = "/drivers"
 
     @staticmethod
+    def get_driver_by_id(driver_id: str) -> json:
+        """
+        Get driver profole of specific driver
+        """
+        result = launch_request_f1db(f"{DriverTools.BASE_PATH}/{driver_id}")
+        return result
+
+    @staticmethod
     def search_driver(driver: str) -> json:
         """
         Get driver profole of specific driver

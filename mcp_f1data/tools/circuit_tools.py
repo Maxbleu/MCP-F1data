@@ -8,7 +8,28 @@ class CircuitTools(BaseTools):
     BASE_PATH = "/circuits"
 
     @staticmethod
-    def search_circuit(circuit: str) -> json:
+    def get_circuit_by_id(circuit_id: str) -> json:
+        """
+        Get circuit information:
+            id, str
+            full_name, str
+            type, str
+            place_name, str
+            latitude, float
+            length, float
+            turns, int
+            total_races_held, int
+            name, str
+            previous_names, str
+            direction, str
+            country_id, str
+            longitude, float
+        """
+        result = launch_request_f1db(f"{CircuitTools.BASE_PATH}/{circuit_id}")
+        return result
+
+    @staticmethod
+    def get_circuit_by_name(circuit: str) -> json:
         """
         Get circuit information:
             id, str

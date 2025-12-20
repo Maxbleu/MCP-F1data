@@ -11,6 +11,21 @@ class GrandPrixTools(BaseTools):
     BASE_PATH = "/grand_prix"
 
     @staticmethod
+    def get_grand_prix_by_id(grand_prix_id: str) -> json:
+        """
+        Get grand prix historical information:
+            abbreviation, str
+            name, str
+            total_races_held, int
+            short_name, str
+            id, str
+            full_name, str
+            country_id, str
+        """
+        result = launch_request_f1db(f"{GrandPrixTools.BASE_PATH}/{grand_prix_id}")
+        return result
+
+    @staticmethod
     def search_grand_prix(grand_prix: str) -> json:
         """
         Get grand prix historical information.
