@@ -11,24 +11,11 @@ class ConstructorTools(BaseTools):
     @staticmethod
     def get_constructor_by_id(constructor_id: str) -> json:
         """
-        Get constructor information:
-            id, str
-            name, str
-            full_name, str
-            country, str
-            best_championship_position, int
-            best_race_result, int
-            total_championship_wins, int
-            total_race_entries, int
-            total_race_start, int
-            total_race_wins, int
-            total_1_and_2_finishes, int
-            total_race_laps, int
-            total_podium_races, int
-            total_points, float
-            total_championship_points, float
-            total_pole_position, int
-            total_fastest_laps, int
+        Get constructor object by constructor_id.
+
+        :param constructor_id: id of the constructor, str
+
+        :return: json with the constructor object information
         """
         result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/{constructor_id}")
         return result
@@ -36,31 +23,11 @@ class ConstructorTools(BaseTools):
     @staticmethod
     def search_constructor(constructor: str) -> json:
         """
-        Get constructor information:
-            id, str
-            name, str
-            full_name, str
-            country, str
-            best_championship_position, int
-            best_race_result, int
-            total_championship_wins, int
-            total_race_entries, int
-            total_race_start, int
-            total_race_wins, int
-            total_1_and_2_finishes, int
-            total_race_laps, int
-            total_podium_races, int
-            total_points, float
-            total_championship_points, float
-            total_pole_position, int
-            total_fastest_laps, int
+        Search constructor by name input user.
 
-            IMPORTANT
-            In the parameter indicate only 
-            the constructor's name e.g:
-                - I want to know about Mercedes -> Mercedes
-                - Behra Porsche -> Behra Porsche
-                - Matra -> Matra
+        :param constructor: name of the constructor, str
+
+        :return: json with the constructor's F1 grand prix race information
         """
         result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/search",data={"constructor":constructor})
         return result
@@ -68,24 +35,11 @@ class ConstructorTools(BaseTools):
     @staticmethod
     def get_constructor_chronology(constructor_id: str) -> json:
         """
-        Get constructor's F1 chronology list F1 history of specific constructor:
-            id, str
-            name, str
-            full_name, str
-            country, str
-            best_championship_position, int
-            best_race_result, int
-            total_championship_wins, int
-            total_race_entries, int
-            total_race_start, int
-            total_race_wins, int
-            total_1_and_2_finishes, int
-            total_race_laps, int
-            total_podium_races, int
-            total_points, float
-            total_championship_points, float
-            total_pole_position, int
-            total_fastest_laps, int
+        Get constructor's F1 chronology list F1 history of specific constructor.
+
+        :param constructor_id: id of the constructor, str
+
+        :return: json with the constructor's F1 grand prix race information
         """
         result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/{constructor_id}/chronology")
         return result
@@ -93,13 +47,23 @@ class ConstructorTools(BaseTools):
     @staticmethod
     def get_constructor_drivers(constructor_id: str) -> json:
         """
-        Get constructor's F1 drivers list F1 history of specific constructor:
-            engine_manufacturer_id, str
-            constructor_id, str
-            year, int
-            rounds", str
-            entrant, obj
-            driver, obj
+        Get constructor's F1 drivers list F1 history of specific constructor.
+
+        :param constructor_id: id of the constructor, str
+
+        :return: json with the constructor's F1 grand prix race information
         """
         result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/{constructor_id}/drivers")
+        return result
+
+    @staticmethod
+    def get_constructor_championships(constructor_id: str) -> json:
+        """
+        Get constructor's F1 championships list F1 history of specific constructor.
+
+        :param constructor_id: id of the constructor, str
+
+        :return: json with the constructor's F1 grand prix race information
+        """
+        result = launch_request_f1db(f"{ConstructorTools.BASE_PATH}/{constructor_id}/championships")
         return result
