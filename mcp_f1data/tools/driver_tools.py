@@ -13,7 +13,11 @@ class DriverTools(BaseTools):
     @staticmethod
     def get_driver_by_id(driver_id: str) -> json:
         """
-        Get driver profole of specific driver
+        Get driver profole of specific driver.
+
+        :param driver_id: id of the driver, str
+
+        :return: json with the driver's F1 grand prix race information
         """
         result = launch_request_f1db(f"{DriverTools.BASE_PATH}/{driver_id}")
         return result
@@ -21,7 +25,11 @@ class DriverTools(BaseTools):
     @staticmethod
     def search_driver(driver: str) -> json:
         """
-        Get driver profole of specific driver
+        Search driver by name input user.
+
+        :param driver: name of the driver, str
+
+        :return: json with the driver's F1 grand prix race information
         """
         result = launch_request_f1db(f"{DriverTools.BASE_PATH}/search",data={"driver":driver})
         return result
@@ -29,7 +37,11 @@ class DriverTools(BaseTools):
     @staticmethod
     def get_driver_family_relationship_by_id(driver_id: str) -> json:
         """
-        Get driver's F1 families list of specific driver
+        Get driver's F1 families list of specific driver.
+
+        :param driver_id: id of the driver, str
+
+        :return: json with the driver's F1 grand prix race information
         """
         result = launch_request_f1db(f"{DriverTools.BASE_PATH}/{driver_id}/family_relationship")
         return result
@@ -37,7 +49,24 @@ class DriverTools(BaseTools):
     @staticmethod
     def get_driver_career_by_id(driver_id: str) -> json:
         """
-        Get driver's F1 career list of specific constructors, which drives in the past
+        Get driver's F1 career list of specific constructors, 
+        which drives in the past.
+
+        :param driver_id: id of the driver, str
+
+        :return: json with the driver's F1 grand prix race information
         """
         result = launch_request_f1db(f"{DriverTools.BASE_PATH}/{driver_id}/career")
+        return result
+
+    @staticmethod
+    def get_driver_championships_by_id(driver_id: str) -> json:
+        """
+        Get driver's F1 championships list of specific driver.
+
+        :param driver_id: id of the driver, str
+
+        :return: json with the driver's F1 grand prix race information
+        """
+        result = launch_request_f1db(f"{DriverTools.BASE_PATH}/{driver_id}/championships")
         return result
