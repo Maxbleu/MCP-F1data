@@ -10,47 +10,23 @@ class CircuitTools(BaseTools):
     @staticmethod
     def get_circuit_by_id(circuit_id: str) -> json:
         """
-        Get circuit information:
-            id, str
-            full_name, str
-            type, str
-            place_name, str
-            latitude, float
-            length, float
-            turns, int
-            total_races_held, int
-            name, str
-            previous_names, str
-            direction, str
-            country_id, str
-            longitude, float
+        Get circuit object by circuit_id.
+
+        :param circuit_id: id of the circuit, str
+
+        :return: json with the circuit object information
         """
         result = launch_request_f1db(f"{CircuitTools.BASE_PATH}/{circuit_id}")
         return result
 
     @staticmethod
-    def get_circuit_by_name(circuit: str) -> json:
+    def search_circuit(circuit: str) -> json:
         """
-        Get circuit information:
-            id, str
-            full_name, str
-            type, str
-            place_name, str
-            latitude, float
-            length, float
-            turns, int
-            total_races_held, int
-            name, str
-            previous_names, str
-            direction, str
-            country_id, str
-            longitude, float
+        Search circuit by name input user.
 
-        IMPORTANT
-        In the parameter indicate only 
-        the circuit's name e.g:
-            - I want to know about Imola's circuit, Enzo Dino Ferrari -> Enzo Dino Ferrari
-            - Avus -> Avus
+        :param circuit: name of the circuit, str
+
+        :return: json with the circuit's F1 grand prix race information
         """
         result = launch_request_f1db(f"{CircuitTools.BASE_PATH}/search",data={"circuit":circuit})
         return result
@@ -58,48 +34,12 @@ class CircuitTools(BaseTools):
     @staticmethod
     def get_circuit_chronology_by_id(circuit_id: str) -> json:
         """
-        Get circuit's F1 chronology list F1 grand prix race in specific circuit:
-            date, str
-            drivers_championship_decider, bool
-            qualifying_1_time, str
-            sprint_race_time, str
-            time, str
-            direction, str
-            constructors_championship_decider, bool
-            free_practice_2_date, date
-            qualifying_2_date, date
-            warming_up_date, date
-            official_name, str
-            course_length, float
-            pre_qualifying_date, date
-            free_practice_2_time, str
-            qualifying_2_time, str
-            warming_up_time, str
-            year, int
-            turns, int
-            free_practice_3_date, date
-            qualifying_date, date
-            qualifying_format, str
-            laps, int
-            pre_qualifying_time, str
-            free_practice_3_time, str
-            qualifying_time, str
-            id, int
-            circuit_type, str
-            distance, float
-            free_practice_4_date, date
-            sprint_qualifying_date, date
-            round, int
-            scheduled_laps, int
-            free_practice_1_date, date
-            free_practice_4_time, str
-            sprint_qualifying_time, str
-            scheduled_distance, float
-            free_practice_1_time, str
-            qualifying_1_date, date
-            sprint_race_date, date
-            grand_prix, obj
-            circuit, ob
+        Get circuit's F1 chronology list F1 grand prix 
+        race in specific circuit.
+
+        :param circuit_id: id of the circuit, str
+
+        :return: json with the circuit's F1 grand prix race information
         """
         result = launch_request_f1db(f"{CircuitTools.BASE_PATH}/{circuit_id}/chronology")
         return result
@@ -107,66 +47,38 @@ class CircuitTools(BaseTools):
     @staticmethod
     def get_circuit_by_season(circuit_id: str, year: int) -> json:
         """
-        Get circuit's F1 chronology list F1 grand prix race in specific circuit:
-            date, str
-            drivers_championship_decider, bool
-            qualifying_1_time, str
-            sprint_race_time, str
-            time, str
-            direction, str
-            constructors_championship_decider, bool
-            free_practice_2_date, date
-            qualifying_2_date, date
-            warming_up_date, date
-            official_name, str
-            course_length, float
-            pre_qualifying_date, date
-            free_practice_2_time, str
-            qualifying_2_time, str
-            warming_up_time, str
-            year, int
-            turns, int
-            free_practice_3_date, date
-            qualifying_date, date
-            qualifying_format, str
-            laps, int
-            pre_qualifying_time, str
-            free_practice_3_time, str
-            qualifying_time, str
-            id, int
-            circuit_type, str
-            distance, float
-            free_practice_4_date, date
-            sprint_qualifying_date, date
-            round, int
-            scheduled_laps, int
-            free_practice_1_date, date
-            free_practice_4_time, str
-            sprint_qualifying_time, str
-            scheduled_distance, float
-            free_practice_1_time, str
-            qualifying_1_date, date
-            sprint_race_date, date
-            grand_prix, obj
-            circuit, ob
+        Get circuit's F1 grand prix race in specific circuit.
+
+        :param circuit_id: id of the circuit, str
+        :param year: year of the season, int
+
+        :return: json with the circuit's F1 grand prix race information
         """
         result = launch_request_f1db(f"{CircuitTools.BASE_PATH}/{circuit_id}/{year}")
         return result
 
     @staticmethod
-    def get_circuit_drivers_championship_decider_by_id(circuit_id:str) -> json:
+    def get_circuit_drivers_championship_decider_by_id(circuit_id: str) -> json:
         """
         Get from a specific circuit times when a driver
         get the drivers championship
+
+        :param circuit_id: id of the circuit, str
+
+        :return: json with the drivers championship decider information
         """
         result = launch_request_f1db(f"{CircuitTools.BASE_PATH}/{circuit_id}/championship_decider/drivers")
         return result
 
     @staticmethod
-    def get_circuit_constructors_championship_decider_by_id(circuit_id:str) -> json:
+    def get_circuit_constructors_championship_decider_by_id(circuit_id: str) -> json:
         """
-        Get from a specific circuit times when a driver
-        get the drivers championship
+        Get times when a constructor get the constructors 
+        championship in a specific circuit.
+
+        :param circuit_id: id of the circuit, str
+
+        :return: json with the constructors championship decider information
         """
         result = launch_request_f1db(f"{CircuitTools.BASE_PATH}/{circuit_id}/championship_decider/constructors")
         return result
